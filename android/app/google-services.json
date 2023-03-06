@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "890429033978",
+    "project_id": "hailo-a246d",
+    "storage_bucket": "hailo-a246d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:890429033978:android:bcab3db28e76c6d06b2843",
+        "android_client_info": {
+          "package_name": "com.example.instacura_user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "890429033978-9vs799big8dmfarioelgflmjjnava02c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNuE90tgHJc7ONtBPEB5Kh8Pf5NPE8Jc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "890429033978-9vs799big8dmfarioelgflmjjnava02c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:890429033978:android:93fcb7151ea723876b2843",
+        "android_client_info": {
+          "package_name": "com.hailo.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "890429033978-9vs799big8dmfarioelgflmjjnava02c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNuE90tgHJc7ONtBPEB5Kh8Pf5NPE8Jc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "890429033978-9vs799big8dmfarioelgflmjjnava02c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
