@@ -94,7 +94,9 @@ class LongTermController extends GetxController {
   void addAvailability(DateTime date) {
     availability.insert(0, date);
   }
-
+callUpdate(){
+    update();
+}
   void deleteAvailability(DateTime date) {
     availability.remove(date);
   }
