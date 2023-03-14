@@ -17,6 +17,7 @@ dependencies:
   intl: ^0.17.0
   smooth_page_indicator: ^1.0.0+2
   fl_country_code_picker: ^0.0.3+1
+#  pinput: ^2.2.12
   pinput: ^2.2.31
   fluttertoast: ^8.1.1
   auto_size_text: ^3.0.0

@@ -716,195 +716,202 @@ class LongTerm extends GetView<LongTermController> {
                         style: fontBody(fontSize: 15, fontWeight: FontWeight.w400, fontColor: const Color(0xffB7B7B7)),
                       ),
                       Expanded(
-                        child: Container(
-                          margin: const EdgeInsets.only(top: 20),
-                          height: 300,
-                          decoration: const BoxDecoration(color: kWhiteColor, borderRadius: BorderRadius.vertical(bottom: Radius.circular(35))),
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: controller.selectedDays.length,
-                              itemBuilder: (context, index) {
-                                String day = controller.selectedDays[index];
-                                return DragTarget<Map>(
-                                  builder: (BuildContext context, List accepted, List rejected) {
-                                    return Container(
-                                      width: 100,
-                                      height: 200,
-                                      color: kWhiteColor,
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text("${day}", style: fontBody(fontWeight: FontWeight.w500, fontSize: 12, fontColor: kBlackColor)),
-                                          Expanded(
-                                            child: Container(
-                                              width: 50,
-                                              margin: const EdgeInsets.only(top: 10, bottom: 20),
-                                              padding: const EdgeInsets.all(8),
-                                              decoration: ShapeDecoration(
-                                                color: kPrimaryColor,
-                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                              ),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Expanded(
-                                                    child: SingleChildScrollView(
-                                                      child: Column(
-                                                        mainAxisSize: MainAxisSize.min,
-                                                        children: List.generate(
-                                                          controller.wdays[day].length,
-                                                          (index) => Padding(
-                                                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                                            child: Image.asset(controller.wdays[day][index]["icon"], width: 30, color: kWhiteColor),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                  onAccept: (Map draggedService) async {
-
-                                    // var a=controller.selectTime(draggedService: draggedService, context: context);
-                                    var a= await Get.defaultDialog(
-                                        title: 'Select time',
-                                        content: Container(
-                                          width: 100.w,
+                        child: GetBuilder<LongTermController>(
+                          builder: (context) {
+                            return Container(
+                              margin: const EdgeInsets.only(top: 20),
+                              height: 300,
+                              decoration: const BoxDecoration(color: kWhiteColor, borderRadius: BorderRadius.vertical(bottom: Radius.circular(35))),
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: controller.selectedDays.length,
+                                  itemBuilder: (context, index) {
+                                    String day = controller.selectedDays[index];
+                                    return DragTarget<Map>(
+                                      builder: (BuildContext context, List accepted, List rejected) {
+                                        return Container(
+                                          width: 100,
+                                          height: 200,
+                                          color: kWhiteColor,
                                           child: Column(
+                                            mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Container(
-                                                        height:80,
-                                                        width: 60,
-                                                        decoration: BoxDecoration(
-                                                            border: Border.all(color: kPrimaryColor,width: 2),
-                                                            borderRadius: BorderRadius.circular(10)
-                                                        ),
-                                                        child: Center(
+                                              Text("${day}", style: fontBody(fontWeight: FontWeight.w500, fontSize: 12, fontColor: kBlackColor)),
+                                              Expanded(
+                                                child: Container(
+                                                  width: 50,
+                                                  margin: const EdgeInsets.only(top: 10, bottom: 20),
+                                                  padding: const EdgeInsets.all(8),
+                                                  decoration: ShapeDecoration(
+                                                    color: kPrimaryColor,
+                                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: [
+                                                      Expanded(
+                                                        child: SingleChildScrollView(
                                                           child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              Image.asset(draggedService['icon'],
-                                                                height: 30,
-                                                                width: 30,),
-                                                              SizedBox(height: 10,),
-                                                              Center(child: Text(draggedService['name'],style: TextStyle(fontSize: 10,color: kPrimaryColor),),)
-                                                            ],
+                                                            mainAxisSize: MainAxisSize.min,
+                                                            children: List.generate(
+                                                              controller.wdays[day].length,
+                                                              (index) => Padding(
+                                                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                                                child: Image.asset(controller.wdays[day][index]["icon"], width: 30, color: kWhiteColor),
+                                                              ),
+                                                            ),
                                                           ),
-                                                        )),
-
-                                                    Container(
-                                                      width: 10.w,
-                                                      child: Divider(
-                                                        height: 2,
-                                                        color: kPrimaryColor,
-                                                        thickness: 3,
+                                                        ),
                                                       ),
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Column(
-                                                          children: [
-                                                            Text('Start Time',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
-                                                            SizedBox(width: 15,),
-                                                            InkWell(
-                                                                onTap: () {
-                                                                  Duration initialtimer = const Duration();
-                                                                  DatePicker.showTime12hPicker(
-                                                                    context,
-                                                                    onConfirm: (selected) {
-                                                                      draggedService["startTime"] =
-                                                                          DateFormat("jms").format(selected);
-                                                                      controller.startTime.value= draggedService["startTime"];
-                                                                    },
-// minTime: DateTime.now(),
-// maxTime: DateTime(2030, 12, 31),
-                                                                    onChanged: (date) {
-                                                                      draggedService["startTime"] =
-                                                                          DateFormat("jms").format(date);
-                                                                      controller.startTime.value=draggedService["startTime"];
-                                                                      print('change $date');
-                                                                    },
-                                                                    currentTime: DateTime.tryParse('10:00:00'),
-                                                                  );
-                                                                },
-                                                                child:Obx(()=>controller.startTime.value!=''?
-                                                                Text(controller.startTime.value,style: TextStyle(fontWeight: FontWeight.bold),):Text(draggedService['startTime'])
-                                                                )
-                                                            )
-                                                          ],
-                                                        ),
-                                                        SizedBox(width: 10,),
-                                                        Column(
-                                                          children: [
-                                                            Text('End Time',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
-                                                            SizedBox(width: 15,),
-                                                            InkWell(
-                                                                onTap: () {
-                                                                  Duration initialtimer = const Duration();
-                                                                  DatePicker.showTime12hPicker(
-                                                                    context,
-                                                                    onConfirm: (selected) {
-                                                                      draggedService["endTime"] =
-                                                                          DateFormat("jms").format(selected);
-                                                                      controller.endTime.value= draggedService["endTime"];
-                                                                    },
-// minTime: DateTime.now(),
-// maxTime: DateTime(2030, 12, 31),
-                                                                    onChanged: (date) {
-                                                                      draggedService["endTime"] =
-                                                                          DateFormat("jms").format(date);
-                                                                      controller.endTime.value=draggedService["endTime"];
-                                                                      print('change $date');
-                                                                    },
-                                                                    currentTime: DateTime.tryParse('12:00:00'),
-                                                                  );
-                                                                },
-                                                                child:Obx(()=>controller.endTime.value!=''?
-                                                                Text(controller.endTime.value,style: TextStyle(fontWeight: FontWeight.bold),):Text(draggedService['startTime'],style: TextStyle(fontWeight: FontWeight.bold),)
-                                                                )
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-                                              SizedBox(height: 10,),
-                                              TextButton(onPressed: (){
-                                                Get.back();
-                                              }, child: Text('Done',style: TextStyle(color: kPrimaryColor,fontSize: 16),))
-
                                             ],
                                           ),
-                                        ));
-                                    // draggedService["startTime"] = "9:00 AM";
-                                    // draggedService["endTime"] = "12:00 PM";
-                                    print(draggedService);
-                                    List kochu = controller.wdays[day];
-                                    if (kochu.isNotEmpty) {
-                                      kochu.add(draggedService);
-                                      controller.wdays[day] = kochu;
-                                    } else {
-                                      controller.wdays[day] = [draggedService];
-                                    }
-                                  },
-                                );
-                              }),
+                                        );
+                                      },
+                                      onAccept: (Map draggedService) async {
+
+                                        // var a=controller.selectTime(draggedService: draggedService, context: context);
+                                        var a= await Get.defaultDialog(
+                                            title: 'Select time',
+                                            content: Container(
+                                              width: 100.w,
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                            height:80,
+                                                            width: 60,
+                                                            decoration: BoxDecoration(
+                                                                border: Border.all(color: kPrimaryColor,width: 2),
+                                                                borderRadius: BorderRadius.circular(10)
+                                                            ),
+                                                            child: Center(
+                                                              child: Column(
+                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                children: [
+                                                                  Image.asset(draggedService['icon'],
+                                                                    height: 30,
+                                                                    width: 30,),
+                                                                  SizedBox(height: 10,),
+                                                                  Center(child: Text(draggedService['name'],style: TextStyle(fontSize: 10,color: kPrimaryColor),),)
+                                                                ],
+                                                              ),
+                                                            )),
+
+                                                        Container(
+                                                          width: 10.w,
+                                                          child: Divider(
+                                                            height: 2,
+                                                            color: kPrimaryColor,
+                                                            thickness: 3,
+                                                          ),
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Column(
+                                                              children: [
+                                                                Text('Start Time',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
+                                                                SizedBox(width: 15,),
+                                                                InkWell(
+                                                                    onTap: () {
+                                                                      Duration initialtimer = const Duration();
+                                                                      DatePicker.showTime12hPicker(
+                                                                        context,
+                                                                        onConfirm: (selected) {
+                                                                          draggedService["startTime"] =
+                                                                              DateFormat("jms").format(selected);
+                                                                          controller.startTime.value= draggedService["startTime"];
+                                                                        },
+// minTime: DateTime.now(),
+// maxTime: DateTime(2030, 12, 31),
+                                                                        onChanged: (date) {
+                                                                          draggedService["startTime"] =
+                                                                              DateFormat("jms").format(date);
+                                                                          controller.startTime.value=draggedService["startTime"];
+                                                                          print('change $date');
+                                                                        },
+                                                                        currentTime: DateTime.tryParse('10:00:00'),
+                                                                      );
+                                                                    },
+                                                                    child:Obx(()=>controller.startTime.value!=''?
+                                                                    Text(controller.startTime.value,style: TextStyle(fontWeight: FontWeight.bold),):Text(draggedService['startTime'])
+                                                                    )
+                                                                )
+                                                              ],
+                                                            ),
+                                                            SizedBox(width: 10,),
+                                                            Column(
+                                                              children: [
+                                                                Text('End Time',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
+                                                                SizedBox(width: 15,),
+                                                                InkWell(
+                                                                    onTap: () {
+                                                                      Duration initialtimer = const Duration();
+                                                                      DatePicker.showTime12hPicker(
+                                                                        context,
+                                                                        onConfirm: (selected) {
+                                                                          draggedService["endTime"] =
+                                                                              DateFormat("jms").format(selected);
+                                                                          controller.endTime.value= draggedService["endTime"];
+                                                                        },
+// minTime: DateTime.now(),
+// maxTime: DateTime(2030, 12, 31),
+                                                                        onChanged: (date) {
+                                                                          draggedService["endTime"] =
+                                                                              DateFormat("jms").format(date);
+                                                                          controller.endTime.value=draggedService["endTime"];
+                                                                          print('change $date');
+                                                                        },
+                                                                        currentTime: DateTime.tryParse('12:00:00'),
+                                                                      );
+                                                                    },
+                                                                    child:Obx(()=>controller.endTime.value!=''?
+                                                                    Text(controller.endTime.value,style: TextStyle(fontWeight: FontWeight.bold),):Text(draggedService['startTime'],style: TextStyle(fontWeight: FontWeight.bold),)
+                                                                    )
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 10,),
+                                                  TextButton(onPressed: (){
+                                                    Get.back();
+                                                  }, child: Text('Done',style: TextStyle(color: kPrimaryColor,fontSize: 16),))
+
+                                                ],
+                                              ),
+                                            ));
+                                        // draggedService["startTime"] = "9:00 AM";
+                                        // draggedService["endTime"] = "12:00 PM";
+
+                                        print(draggedService);
+                                        List kochu = controller.wdays[day];
+                                        if (kochu.isNotEmpty) {
+                                          kochu.add(draggedService);
+                                          controller.wdays[day] = kochu;
+                                        } else {
+                                          controller.wdays[day] = [draggedService];
+                                        }
+
+                                        controller.callUpdate();
+                                      },
+                                    );
+                                  }),
+                            );
+                          }
                         ),
                       ),
                       Text(
@@ -1021,7 +1028,7 @@ class LongTerm extends GetView<LongTermController> {
                           ))
                     ],
                   )
-                : Column(
+                : Column(   //SINGLE DAY
                     children: [
                       const SizedBox(height: 40),
                       Text(
@@ -1029,204 +1036,210 @@ class LongTerm extends GetView<LongTermController> {
                         style: fontBody(fontSize: 15, fontWeight: FontWeight.w400, fontColor: const Color(0xffB7B7B7)),
                       ),
                       Expanded(
-                        child: Container(
-                          margin: const EdgeInsets.only(top: 20),
-                          height: 300,
-                          decoration: const BoxDecoration(color: kWhiteColor, borderRadius: BorderRadius.vertical(bottom: Radius.circular(35))),
-                          child: Obx(
-                            () => ListView.builder(
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: controller.availability.length,
-                                itemBuilder: (context, index) {
-                                  DateTime day = controller.availability[index];
-                                  return DragTarget<Map>(
-                                    builder: (BuildContext context, List accepted, List rejected) {
-                                      return Container(
-                                        width: 100,
-                                        height: 200,
-                                        color: kWhiteColor,
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text("${day.day}", style: fontBody(fontWeight: FontWeight.w500, fontSize: 12, fontColor: kBlackColor)),
-                                            Expanded(
-                                              child: Container(
-                                                width: 50,
-                                                margin: const EdgeInsets.only(top: 10, bottom: 20),
-                                                padding: const EdgeInsets.all(8),
-                                                decoration: ShapeDecoration(
-                                                  color: kPrimaryColor,
-                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                                ),
-                                                child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: [
-                                                    Text(getWeekDay(day).toUpperCase(),
-                                                        style: fontBody(fontWeight: FontWeight.w500, fontSize: 12, fontColor: kBlackColor)),
-                                                    Expanded(
-                                                      child: SingleChildScrollView(
-                                                        child: Column(
-                                                          mainAxisSize: MainAxisSize.min,
-                                                          children: List.generate(
-                                                            controller.daysTask[DateFormat("dd-MM-yyyy").format(day)].length,
-                                                            (index) => Padding(
-                                                              padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                                              child: Image.asset(
-                                                                  controller.daysTask[DateFormat("dd-MM-yyyy").format(day)][index]["icon"],
-                                                                  width: 30,
-                                                                  color: kWhiteColor),
+                        child: GetBuilder<LongTermController>(
+                          // init: LongTermController(),
+                          builder: (context) {
+                            return Container(
+                              margin: const EdgeInsets.only(top: 20),
+                              height: 300,
+                              decoration: const BoxDecoration(color: kWhiteColor, borderRadius: BorderRadius.vertical(bottom: Radius.circular(35))),
+                              child: Obx(
+                                () => ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: controller.availability.length,
+                                    itemBuilder: (context, index) {
+                                      DateTime day = controller.availability[index];
+                                      return DragTarget<Map>(
+                                        builder: (BuildContext context, List accepted, List rejected) {
+                                          return Container(
+                                            width: 100,
+                                            height: 200,
+                                            color: kWhiteColor,
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text("${day.day}", style: fontBody(fontWeight: FontWeight.w500, fontSize: 12, fontColor: kBlackColor)),
+                                                Expanded(
+                                                  child: Container(
+                                                    width: 50,
+                                                    margin: const EdgeInsets.only(top: 10, bottom: 20),
+                                                    padding: const EdgeInsets.all(8),
+                                                    decoration: ShapeDecoration(
+                                                      color: kPrimaryColor,
+                                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                                    ),
+                                                    child: Column(
+                                                      mainAxisSize: MainAxisSize.min,
+                                                      children: [
+                                                        Text(getWeekDay(day).toUpperCase(),
+                                                            style: fontBody(fontWeight: FontWeight.w500, fontSize: 12, fontColor: kBlackColor)),
+                                                        Expanded(
+                                                          child: SingleChildScrollView(
+                                                            child: Column(
+                                                              mainAxisSize: MainAxisSize.min,
+                                                              children: List.generate(
+                                                                controller.daysTask[DateFormat("dd-MM-yyyy").format(day)].length,
+                                                                (index) => Padding(
+                                                                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                                                  child: Image.asset(
+                                                                      controller.daysTask[DateFormat("dd-MM-yyyy").format(day)][index]["icon"],
+                                                                      width: 30,
+                                                                      color: kWhiteColor),
+                                                                ),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
+                                                      ],
                                                     ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                    onAccept: (Map draggedService) async {
-                                      String date = DateFormat("dd-MM-yyyy").format(day);
-
-                                      // var a=controller.selectTime(draggedService: draggedService, context: context);
-                                      var a= await Get.defaultDialog(
-                                          title: 'Select time',
-                                          content: Container(
-                                            width: 100.w,
-                                            child: Column(
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    children: [
-                                                      Container(
-                                                          height:80,
-                                                          width: 60,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(color: kPrimaryColor,width: 2),
-                                                            borderRadius: BorderRadius.circular(10)
-                                                          ),
-                                                          child: Center(
-                                                            child: Column(
-                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                                        children: [
-                                                            Image.asset(draggedService['icon'],
-                                                              height: 30,
-                                                              width: 30,),
-                                                            SizedBox(height: 10,),
-                                                            Center(child: Text(draggedService['name'],style: TextStyle(fontSize: 10,color: kPrimaryColor),),)
-                                                        ],
-                                                      ),
-                                                          )),
-
-                                                      Container(
-                                                        width: 10.w,
-                                                        child: Divider(
-                                                          height: 2,
-                                                          color: kPrimaryColor,
-                                                          thickness: 3,
-                                                        ),
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: [
-                                                          Column(
-                                                            children: [
-                                                              Text('Start Time',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
-                                                              SizedBox(width: 15,),
-                                                              InkWell(
-                                                                  onTap: () {
-                                                                    Duration initialtimer = const Duration();
-                                                                    DatePicker.showTime12hPicker(
-                                                                      context,
-                                                                      onConfirm: (selected) {
-                                                                        draggedService["startTime"] =
-                                                                            DateFormat("jms").format(selected);
-                                                                        controller.startTime.value= draggedService["startTime"];
-                                                                      },
-// minTime: DateTime.now(),
-// maxTime: DateTime(2030, 12, 31),
-                                                                      onChanged: (date) {
-                                                                        draggedService["startTime"] =
-                                                                            DateFormat("jms").format(date);
-                                                                        controller.startTime.value=draggedService["startTime"];
-                                                                        print('change $date');
-                                                                      },
-                                                                      currentTime: DateTime.tryParse('10:00:00'),
-                                                                    );
-                                                                  },
-                                                                  child:Obx(()=>controller.startTime.value!=''?
-                                                                  Text(controller.startTime.value,style: TextStyle(fontWeight: FontWeight.bold),):Text(draggedService['startTime'])
-                                                                  )
-                                                              )
-                                                            ],
-                                                          ),
-                                                          SizedBox(width: 10,),
-                                                          Column(
-                                                            children: [
-                                                              Text('End Time',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
-                                                              SizedBox(width: 15,),
-                                                              InkWell(
-                                                                  onTap: () {
-                                                                    Duration initialtimer = const Duration();
-                                                                    DatePicker.showTime12hPicker(
-                                                                      context,
-                                                                      onConfirm: (selected) {
-                                                                        draggedService["endTime"] =
-                                                                            DateFormat("jms").format(selected);
-                                                                        controller.endTime.value= draggedService["endTime"];
-                                                                      },
-// minTime: DateTime.now(),
-// maxTime: DateTime(2030, 12, 31),
-                                                                      onChanged: (date) {
-                                                                        draggedService["endTime"] =
-                                                                            DateFormat("jms").format(date);
-                                                                        controller.endTime.value=draggedService["endTime"];
-                                                                        print('change $date');
-                                                                      },
-                                                                      currentTime: DateTime.tryParse('12:00:00'),
-                                                                    );
-                                                                  },
-                                                                  child:Obx(()=>controller.endTime.value!=''?
-                                                                  Text(controller.endTime.value,style: TextStyle(fontWeight: FontWeight.bold),):Text(draggedService['startTime'],style: TextStyle(fontWeight: FontWeight.bold),)
-                                                                  )
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
                                                   ),
                                                 ),
-                                                SizedBox(height: 10,),
-                                                TextButton(onPressed: (){
-                                                  Get.back();
-                                                }, child: Text('Done',style: TextStyle(color: kPrimaryColor,fontSize: 16),))
-
                                               ],
                                             ),
-                                          ));
-                                      // draggedService["startTime"] = "9:00 AM";
-                                      // draggedService["endTime"] = "12:00 PM";
-                                      print(draggedService);
+                                          );
+                                        },
+                                        onAccept: (Map draggedService) async {
+                                          String date = DateFormat("dd-MM-yyyy").format(day);
 
-                                      List kochu = controller.daysTask[date];
-                                      if (kochu.isNotEmpty) {
-                                        kochu.add(draggedService);
-                                        controller.daysTask[date] = kochu;
-                                      } else {
-                                        controller.daysTask[date] = [draggedService];
-                                      }
-                                    },
-                                  );
-                                }),
-                          ),
+                                          // var a=controller.selectTime(draggedService: draggedService, context: context);
+                                          var a= await Get.defaultDialog(
+                                              title: 'Select time',
+                                              content: Container(
+                                                width: 100.w,
+                                                child: Column(
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets.all(8.0),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                              height:80,
+                                                              width: 60,
+                                                              decoration: BoxDecoration(
+                                                                border: Border.all(color: kPrimaryColor,width: 2),
+                                                                borderRadius: BorderRadius.circular(10)
+                                                              ),
+                                                              child: Center(
+                                                                child: Column(
+                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                            children: [
+                                                                Image.asset(draggedService['icon'],
+                                                                  height: 30,
+                                                                  width: 30,),
+                                                                SizedBox(height: 10,),
+                                                                Center(child: Text(draggedService['name'],style: TextStyle(fontSize: 10,color: kPrimaryColor),),)
+                                                            ],
+                                                          ),
+                                                              )),
+
+                                                          Container(
+                                                            width: 10.w,
+                                                            child: Divider(
+                                                              height: 2,
+                                                              color: kPrimaryColor,
+                                                              thickness: 3,
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              Column(
+                                                                children: [
+                                                                  Text('Start Time',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
+                                                                  SizedBox(width: 15,),
+                                                                  InkWell(
+                                                                      onTap: () {
+                                                                        Duration initialtimer = const Duration();
+                                                                        DatePicker.showTime12hPicker(
+                                                                          context,
+                                                                          onConfirm: (selected) {
+                                                                            draggedService["startTime"] =
+                                                                                DateFormat("jms").format(selected);
+                                                                            controller.startTime.value= draggedService["startTime"];
+                                                                          },
+// minTime: DateTime.now(),
+// maxTime: DateTime(2030, 12, 31),
+                                                                          onChanged: (date) {
+                                                                            draggedService["startTime"] =
+                                                                                DateFormat("jms").format(date);
+                                                                            controller.startTime.value=draggedService["startTime"];
+                                                                            print('change $date');
+                                                                          },
+                                                                          currentTime: DateTime.tryParse('10:00:00'),
+                                                                        );
+                                                                      },
+                                                                      child:Obx(()=>controller.startTime.value!=''?
+                                                                      Text(controller.startTime.value,style: TextStyle(fontWeight: FontWeight.bold),):Text(draggedService['startTime'])
+                                                                      )
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              SizedBox(width: 10,),
+                                                              Column(
+                                                                children: [
+                                                                  Text('End Time',style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
+                                                                  SizedBox(width: 15,),
+                                                                  InkWell(
+                                                                      onTap: () {
+                                                                        Duration initialtimer = const Duration();
+                                                                        DatePicker.showTime12hPicker(
+                                                                          context,
+                                                                          onConfirm: (selected) {
+                                                                            draggedService["endTime"] =
+                                                                                DateFormat("jms").format(selected);
+                                                                            controller.endTime.value= draggedService["endTime"];
+                                                                          },
+// minTime: DateTime.now(),
+// maxTime: DateTime(2030, 12, 31),
+                                                                          onChanged: (date) {
+                                                                            draggedService["endTime"] =
+                                                                                DateFormat("jms").format(date);
+                                                                            controller.endTime.value=draggedService["endTime"];
+                                                                            print('change $date');
+                                                                          },
+                                                                          currentTime: DateTime.tryParse('12:00:00'),
+                                                                        );
+                                                                      },
+                                                                      child:Obx(()=>controller.endTime.value!=''?
+                                                                      Text(controller.endTime.value,style: TextStyle(fontWeight: FontWeight.bold),):Text(draggedService['startTime'],style: TextStyle(fontWeight: FontWeight.bold),)
+                                                                      )
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 10,),
+                                                    TextButton(onPressed: (){
+                                                      Get.back();
+                                                    }, child: Text('Done',style: TextStyle(color: kPrimaryColor,fontSize: 16),))
+
+                                                  ],
+                                                ),
+                                              ));
+                                          // draggedService["startTime"] = "9:00 AM";
+                                          // draggedService["endTime"] = "12:00 PM";
+                                          print(draggedService);
+
+                                          List kochu = controller.daysTask[date];
+                                          if (kochu.isNotEmpty) {
+                                            kochu.add(draggedService);
+                                            controller.daysTask[date] = kochu;
+                                          } else {
+                                            controller.daysTask[date] = [draggedService];
+                                          }
+                                          controller.callUpdate();
+                                        },
+                                      );
+                                    }),
+                              ),
+                            );
+                          }
                         ),
                       ),
                       Text(

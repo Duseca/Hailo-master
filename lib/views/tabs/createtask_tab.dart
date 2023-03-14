@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:hailo/my_widgets/dialogs/errorDialog.dart';
 import 'package:hailo/views/tabs/testtokenscreen.dart';
 import 'package:http/http.dart' as http;
 
@@ -198,22 +199,32 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
       return;
     }
 
-    List<Location> locations = await locationFromAddress(pickUpController.text);
-    var first = locations.first;
-    double lat = first.latitude;
-    double long = first.longitude;
+    List<Location> locations=[];
+    try {
+      locations = await locationFromAddress(pickUpController.text);
+      customToast('Location selected');
+      var first = locations.first;
+      double lat = first.latitude;
+      double long = first.longitude;
 
-    pickupPoint = GeoPoint(lat, long);
+      pickupPoint = GeoPoint(lat, long);
 
-    final GoogleMapController mapController = await googleMapController.future;
+      final GoogleMapController mapController = await googleMapController.future;
 
-    mapController.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-            target: LatLng(locations.first.latitude, locations.first.longitude),
-            zoom: 15),
-      ),
-    );
+      mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+              target: LatLng(locations.first.latitude, locations.first.longitude),
+              zoom: 15),
+        ),
+      );
+    }
+    catch (e){
+      print('LOCATIONS ARE $e');
+      errorDialog(title: 'Error', msg: e.toString());
+    }
+
+
   }
 
   stopOneLocation() async {
@@ -221,23 +232,33 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
       return;
     }
 
-    List<Location> locations =
-        await locationFromAddress(stopOneController.text);
-    var first = locations.first;
-    double lat = first.latitude;
-    double long = first.longitude;
 
-    stopOnePoint = GeoPoint(lat, long);
 
-    final GoogleMapController mapController = await googleMapController.future;
+    List<Location> locations=[];
+    try {
+      locations = await locationFromAddress(stopOneController.text);
+      customToast('Location selected');
+      var first = locations.first;
+      double lat = first.latitude;
+      double long = first.longitude;
 
-    mapController.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-            target: LatLng(locations.first.latitude, locations.first.longitude),
-            zoom: 15),
-      ),
-    );
+      stopOnePoint = GeoPoint(lat, long);
+
+      final GoogleMapController mapController = await googleMapController.future;
+
+      mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+              target: LatLng(locations.first.latitude, locations.first.longitude),
+              zoom: 15),
+        ),
+      );
+    }
+    catch (e){
+      print('LOCATIONS ARE $e');
+      errorDialog(title: 'Error', msg: e.toString());
+    }
+
   }
 
   updateLocation() async {
@@ -245,23 +266,34 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
       return;
     }
 
-    List<Location> locations =
-        await locationFromAddress(searchLocationController.text);
-    var first = locations.first;
-    double lat = first.latitude;
-    double long = first.longitude;
 
-    searchLocationPoint = GeoPoint(lat, long);
 
-    final GoogleMapController mapController = await googleMapController.future;
+    List<Location> locations=[];
+    try {
+      locations = await locationFromAddress(searchLocationController.text);
+      customToast('Location selected');
+      var first = locations.first;
+      double lat = first.latitude;
+      double long = first.longitude;
 
-    mapController.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-            target: LatLng(locations.first.latitude, locations.first.longitude),
-            zoom: 15),
-      ),
-    );
+      searchLocationPoint = GeoPoint(lat, long);
+
+      final GoogleMapController mapController = await googleMapController.future;
+
+      mapController.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+              target: LatLng(locations.first.latitude, locations.first.longitude),
+              zoom: 15),
+        ),
+      );
+    }
+    catch (e){
+      print('LOCATIONS ARE $e');
+      errorDialog(title: 'Error', msg: e.toString());
+    }
+
+
   }
 
   //------Determining current position--------------

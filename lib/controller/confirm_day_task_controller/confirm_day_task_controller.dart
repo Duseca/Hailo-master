@@ -34,7 +34,7 @@ class ConfirmTaskController extends GetxController {
     datesWisePayments.value = taskData.get('datesWisePayments');
 
     List daysList = taskData.get('days');
-
+      daysList.sort((a,b) => a.compareTo(b));
     List caregiverServices = taskData.get('caregiverService');
 
     //initializing task details in ConfirmTaskModel
