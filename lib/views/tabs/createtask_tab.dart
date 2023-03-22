@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:hailo/my_widgets/dialogs/errorDialog.dart';
@@ -135,7 +136,7 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
   final TextEditingController pickUpController = TextEditingController();
   final TextEditingController stopOneController = TextEditingController();
   var userStripeId;
-  var selectedCard={}.obs;
+  var selectedCard = {}.obs;
   List displayTextField = [];
 
   addTextField() {
@@ -164,7 +165,7 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
       // print('Response body: ${response.body}');
       var jsonDecoded = jsonDecode(response.body);
       eachUserCards = jsonDecoded['cards'];
-      selectedCard.value=eachUserCards.last;
+      selectedCard.value = eachUserCards.last;
       print('JSON DECODE OF CARDS: ${jsonDecoded}');
       // eachUserCards= jsonDecoded['meditations'];
     } catch (e) {
@@ -199,7 +200,7 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
       return;
     }
 
-    List<Location> locations=[];
+    List<Location> locations = [];
     try {
       locations = await locationFromAddress(pickUpController.text);
       customToast('Location selected');
@@ -209,22 +210,23 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
 
       pickupPoint = GeoPoint(lat, long);
 
-      final GoogleMapController mapController = await googleMapController.future;
+      log("This is pickup point: $pickupPoint");
+
+      final GoogleMapController mapController =
+          await googleMapController.future;
 
       mapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
-              target: LatLng(locations.first.latitude, locations.first.longitude),
+              target:
+                  LatLng(locations.first.latitude, locations.first.longitude),
               zoom: 15),
         ),
       );
-    }
-    catch (e){
+    } catch (e) {
       print('LOCATIONS ARE $e');
       errorDialog(title: 'Error', msg: e.toString());
     }
-
-
   }
 
   stopOneLocation() async {
@@ -232,9 +234,7 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
       return;
     }
 
-
-
-    List<Location> locations=[];
+    List<Location> locations = [];
     try {
       locations = await locationFromAddress(stopOneController.text);
       customToast('Location selected');
@@ -244,21 +244,21 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
 
       stopOnePoint = GeoPoint(lat, long);
 
-      final GoogleMapController mapController = await googleMapController.future;
+      final GoogleMapController mapController =
+          await googleMapController.future;
 
       mapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
-              target: LatLng(locations.first.latitude, locations.first.longitude),
+              target:
+                  LatLng(locations.first.latitude, locations.first.longitude),
               zoom: 15),
         ),
       );
-    }
-    catch (e){
+    } catch (e) {
       print('LOCATIONS ARE $e');
       errorDialog(title: 'Error', msg: e.toString());
     }
-
   }
 
   updateLocation() async {
@@ -266,9 +266,7 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
       return;
     }
 
-
-
-    List<Location> locations=[];
+    List<Location> locations = [];
     try {
       locations = await locationFromAddress(searchLocationController.text);
       customToast('Location selected');
@@ -278,22 +276,21 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
 
       searchLocationPoint = GeoPoint(lat, long);
 
-      final GoogleMapController mapController = await googleMapController.future;
+      final GoogleMapController mapController =
+          await googleMapController.future;
 
       mapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
-              target: LatLng(locations.first.latitude, locations.first.longitude),
+              target:
+                  LatLng(locations.first.latitude, locations.first.longitude),
               zoom: 15),
         ),
       );
-    }
-    catch (e){
+    } catch (e) {
       print('LOCATIONS ARE $e');
       errorDialog(title: 'Error', msg: e.toString());
     }
-
-
   }
 
   //------Determining current position--------------
@@ -871,8 +868,8 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
                     margin: const EdgeInsets.only(top: kToolbarHeight + 60),
                     width: Get.width,
                     height: data["taskName"] == 'Light Housekeeping'
-                        ? Get.height / 3
-                        : Get.height / 3.8,
+                        ? Get.height / 2
+                        : Get.height / 3,
                     child: data['isActive'] == 'Yes'
                         ? Padding(
                             padding: const EdgeInsets.only(
@@ -913,7 +910,7 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
                                                   Row(
                                                     children: [
                                                       Container(
-                                                        height: 30,
+                                                        height: 10,
                                                         width: 30,
                                                         decoration:
                                                             const BoxDecoration(
@@ -1065,7 +1062,7 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
                                                                   'Yes')
                                                                 Padding(
                                                                   padding: const EdgeInsets
-                                                                           .only(
+                                                                          .only(
                                                                       top:
                                                                           10.0),
                                                                   child: ElevatedButton(
@@ -1085,10 +1082,6 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
                                                                           "instantID":
                                                                               ""
                                                                         });
-
-
-
-
 
                                                                         await FirebaseFirestore
                                                                             .instance
@@ -1732,7 +1725,9 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
 
             // Usertype drop down
             userDropDown(),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Container(
@@ -1740,139 +1735,157 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
                 width: Get.width * 0.6,
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    width: 1,
-                    color: kPrimaryColor
-                  )
-                ),
-                child: Obx(()=>Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      selectedCard['brand'] == 'Visa'
-                          ? Image.asset(
-                              'assets/visa.png',
-                              height: 40,
-                              width: 40,
-                            )
-                          : Image.asset(
-                              'assets/mastercard.png',
-                              height: 40,
-                              width: 40,
-                            ),
-                      Text(
-                        '****  ****  ****  ${selectedCard['last4']}',
-                        style: TextStyle(
-                            color: Colors.black38,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ])),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(width: 1, color: kPrimaryColor)),
+                child: Obx(() => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          selectedCard['brand'] == 'Visa'
+                              ? Image.asset(
+                                  'assets/visa.png',
+                                  height: 40,
+                                  width: 40,
+                                )
+                              : Image.asset(
+                                  'assets/mastercard.png',
+                                  height: 40,
+                                  width: 40,
+                                ),
+                          Text(
+                            '****  ****  ****  ${selectedCard['last4']}',
+                            style: TextStyle(
+                                color: Colors.black38,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ])),
               ),
             ),
-            SizedBox(height: 5,),
-            TextButton(onPressed: (){
-              Get.defaultDialog(title: 'Select card',content: Container(
-                height: Get.height *0.5,
-                width: Get.width*0.9,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      height: Get.height *0.42,
-                      child:FutureBuilder(
-        future: getUserCards(userId: widget.uid),
-        builder: (context,data){
-        if(data.connectionState==ConnectionState.done) {
-                          return ListView.builder(
-                                      itemCount: eachUserCards.length,
-                                      itemBuilder: (context, index) {
-                                        if(eachUserCards.length>0){
-                                          return Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 20),
-                                            child: InkWell(
-                                                onTap:(){
-                                                  selectedCard.value=eachUserCards[index];
-                                                  Get.back();
-                                                      },
-                                              child: Container(
-                                                height: Get.height * 0.08,
-                                                width: Get.width * 0.6,
-                                                child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment
-                                                        .spaceBetween,
-                                                    children: [
-                                                      eachUserCards[index]['brand'] == 'Visa'
-                                                          ? Image.asset(
-                                                        'assets/visa.png',
-                                                        height: 40,
-                                                        width: 40,
-                                                      )
-                                                          : Image.asset(
-                                                        'assets/mastercard.png',
-                                                        height: 40,
-                                                        width: 40,
-                                                      ),
-                                                      Text(
-                                                        '****  ****  ****  ${eachUserCards[index]['last4']}',
-                                                        style: TextStyle(
-                                                            color: Colors.black38,
-                                                            fontSize: 18,
-                                                            fontWeight: FontWeight.bold
-                                                        ),),
-                                                    ]),
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                        else{
-                                          return Text('No saved cards found !!!');
-                                        }
-                                      }
-                                  );  }
-        else {
-          return Center(
-            child: CircularProgressIndicator(color: kPrimaryColor,),
-          );
-        }
-                        }
-                      )
+            SizedBox(
+              height: 5,
+            ),
+            TextButton(
+                onPressed: () {
+                  Get.defaultDialog(
+                    title: 'Select card',
+                    content: Container(
+                      height: Get.height * 0.5,
+                      width: Get.width * 0.9,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                              height: Get.height * 0.42,
+                              child: FutureBuilder(
+                                  future: getUserCards(userId: widget.uid),
+                                  builder: (context, data) {
+                                    if (data.connectionState ==
+                                        ConnectionState.done) {
+                                      return ListView.builder(
+                                          itemCount: eachUserCards.length,
+                                          itemBuilder: (context, index) {
+                                            if (eachUserCards.length > 0) {
+                                              return Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 20),
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    selectedCard.value =
+                                                        eachUserCards[index];
+                                                    Get.back();
+                                                  },
+                                                  child: Container(
+                                                    height: Get.height * 0.08,
+                                                    width: Get.width * 0.6,
+                                                    child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          eachUserCards[index][
+                                                                      'brand'] ==
+                                                                  'Visa'
+                                                              ? Image.asset(
+                                                                  'assets/visa.png',
+                                                                  height: 40,
+                                                                  width: 40,
+                                                                )
+                                                              : Image.asset(
+                                                                  'assets/mastercard.png',
+                                                                  height: 40,
+                                                                  width: 40,
+                                                                ),
+                                                          Text(
+                                                            '****  ****  ****  ${eachUserCards[index]['last4']}',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black38,
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ]),
+                                                  ),
+                                                ),
+                                              );
+                                            } else {
+                                              return Text(
+                                                  'No saved cards found !!!');
+                                            }
+                                          });
+                                    } else {
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          color: kPrimaryColor,
+                                        ),
+                                      );
+                                    }
+                                  })),
 
+                          InkWell(
+                            onTap: () {
+                              Get.to(() => PaymentSheetScreen(
+                                    userId: widget.uid,
+                                    customerStripeID: userStripeId,
+                                  ));
+                            },
+                            child: Container(
+                              height: 50,
+                              width: 194,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(9),
+                                  color: kPrimaryColor),
+                              child: Center(
+                                  child: Text(
+                                'Add card',
+                                style: fontBody(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                    fontColor: kWhiteColor),
+                              )),
+                            ),
+                          )
 
-                    ),
-
-                    InkWell(
-                      onTap: (){
-                        Get.to(()=>PaymentSheetScreen(userId: widget.uid, customerStripeID: userStripeId,));
-                      },
-                      child: Container(
-                        height: 50,
-                        width: 194,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9), color: kPrimaryColor),
-                        child: Center(
-                            child: Text(
-                              'Add card',
-                              style: fontBody(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                  fontColor: kWhiteColor),
-                            )),
+                          // if (tokenData != null)
+                          //   ResponseCard(
+                          //     response: tokenData!.toJson().toPrettyString(),
+                          //   )
+                        ],
                       ),
-                    )
-
-                    // if (tokenData != null)
-                    //   ResponseCard(
-                    //     response: tokenData!.toJson().toPrettyString(),
-                    //   )
-                  ],
-                ),
-              ),);
-            }, child: Text('Select other card',style: TextStyle(color: kPrimaryColor),)),
-            SizedBox(height: 10,),
+                    ),
+                  );
+                },
+                child: Text(
+                  'Select other card',
+                  style: TextStyle(color: kPrimaryColor),
+                )),
+            SizedBox(
+              height: 10,
+            ),
             //Comment section
             if (selectedTask == ('Light Housekeeping'))
               TextField(
@@ -1965,7 +1978,9 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
                             amount: double.parse(_price.text),
                             tId: widget.uid,
                             name: task["name"],
-                            icon: task["icon"], cardId: selectedCard['id'], customerId: userStripeId);
+                            icon: task["icon"],
+                            cardId: selectedCard['id'],
+                            customerId: userStripeId);
                       },
                       child: const Text(
                         "Confirm",
@@ -1987,7 +2002,12 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
   }
 
   Future<void> makePayment(
-      {required double amount, required String tId, name, icon,required cardId,required customerId}) async {
+      {required double amount,
+      required String tId,
+      name,
+      icon,
+      required cardId,
+      required customerId}) async {
     try {
       // paymentIntent = await createPaymentIntent(amount, 'USD');
       //
@@ -1999,7 +2019,7 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
       //             merchantDisplayName: 'Hailo Care'))
       //     .then((value) {});
 
-      displayPaymentSheet(amount, name, icon, tId,cardId,customerId);
+      displayPaymentSheet(amount, name, icon, tId, cardId, customerId);
     } catch (e, s) {
       print('exception:$e$s');
     }
@@ -2027,105 +2047,106 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
       print(err.toString());
     }
   }
-  var paymentDone=false;
-payToStripe({required customerId,required cardId,required amount}) async {
 
-    try{
-
+  var paymentDone = false;
+  payToStripe({required customerId, required cardId, required amount}) async {
+    try {
       var url = Uri.parse('$api/create-charge');
       print(url);
-      Map body=
-      {
+      Map body = {
         "amount": amount,
         "currency": "usd",
-        "customer":customerId,
+        "customer": customerId,
         "source": cardId,
         "description": "description"
       };
       print(json.encode(body));
-      var response = await http.post(url,headers: {"Content-Type": "application/json"},body: json.encode(body));
-      if(response.statusCode==200){
+      var response = await http.post(url,
+          headers: {"Content-Type": "application/json"},
+          body: json.encode(body));
+      if (response.statusCode == 200) {
         paymentDone = true;
         customToast('Payment done successfully');
-
+      } else {
+        paymentDone = false;
+        customToast(
+            'Payment not done due to some error, please check if your card is working');
       }
-      else {
-        paymentDone=false;
-        customToast('Payment not done due to some error, please check if your card is working');
-      }
-    }
-    catch (e){
-      paymentDone=false;
+    } catch (e) {
+      paymentDone = false;
       print("ERROR OCCURED : ${e.toString()}");
     }
+  }
 
-}
-  displayPaymentSheet(double amount, String name, icon, tId,cardId,customerId) async {
+  displayPaymentSheet(
+      double amount, String name, icon, tId, cardId, customerId) async {
     try {
       // await Stripe.instance.presentPaymentSheet().then((value) async {
-      await payToStripe(customerId: customerId, cardId: cardId, amount: (amount * 100).toInt().toString()).then((value) async {
-        if(paymentDone==true){
-        await FirebaseFirestore.instance
-            .collection("transactionPending")
-            .doc(widget.uid)
-            .set({
-          "userUid": widget.uid,
-          "day": DateFormat('dd-MM-yyyy').format(DateTime.now()),
-          "month": DateFormat('MMM-yyyy').format(DateTime.now()),
-          "time": DateTime.now(),
-          "price": amount,
-          "isPending": true,
-        }).then((value) async {
+      await payToStripe(
+              customerId: customerId,
+              cardId: cardId,
+              amount: (amount * 100).toInt().toString())
+          .then((value) async {
+        if (paymentDone == true) {
           await FirebaseFirestore.instance
-              .collection("instantTask")
+              .collection("transactionPending")
               .doc(widget.uid)
               .set({
-            "destination": name == "Drive"
-                ? stopOneController.text
-                : searchLocationController.text,
-            "requirements": selectedValue,
-            "relation": user,
+            "userUid": widget.uid,
+            "day": DateFormat('dd-MM-yyyy').format(DateTime.now()),
+            "month": DateFormat('MMM-yyyy').format(DateTime.now()),
+            "time": DateTime.now(),
             "price": amount,
-            "time": _time.text,
-            "date": date,
-            "uid": widget.uid,
-            "taskName": name,
-            "taskIcon": icon,
-            "location": name == "Grocery Shopping" || name == "Drive"
-                ? pickupPoint
-                : location,
-            "plocation": pickUpController.text,
-            "comment": descController.text,
-            "dlocation": name == "Drive" ? stopOnePoint : lastposition,
-            /*"stopOneName": stopOneController.text,
+            "isPending": true,
+          }).then((value) async {
+            await FirebaseFirestore.instance
+                .collection("instantTask")
+                .doc(widget.uid)
+                .set({
+              "destination": name == "Drive"
+                  ? stopOneController.text
+                  : searchLocationController.text,
+              "requirements": selectedValue,
+              "relation": user,
+              "price": amount,
+              "time": _time.text,
+              "date": date,
+              "uid": widget.uid,
+              "taskName": name,
+              "taskIcon": icon,
+              "location": name == "Grocery Shopping" || name == "Drive"
+                  ? pickupPoint
+                  : location,
+              "plocation": pickUpController.text,
+              "comment": descController.text,
+              "dlocation": name == "Drive" ? stopOnePoint : lastposition,
+              /*"stopOneName": stopOneController.text,
             "stopOneLocation": name == "Drive" ? stopOnePoint : 0,*/
-            "isActive": "No",
-            //"withdrawalID": value.id,
+              "isActive": "No",
+              //"withdrawalID": value.id,
+            });
           });
-        });
 
-        Get.to(
-            () => TaskCreated(
-                  uid: widget.uid,
-                ),
-            arguments: [
-              amount,
-              _time.text,
-              date,
-              name,
-              icon,
-              searchLocationController.text,
-              stopOneController.text,
-              pickUpController.text,
-            ]);
-        customToast("Payment Successful");
-        paymentIntent = null;
-      }
-      else{
-        customToast('Payment not done due to some error');
+          Get.to(
+              () => TaskCreated(
+                    uid: widget.uid,
+                  ),
+              arguments: [
+                amount,
+                _time.text,
+                date,
+                name,
+                icon,
+                searchLocationController.text,
+                stopOneController.text,
+                pickUpController.text,
+              ]);
+          customToast("Payment Successful");
+          paymentIntent = null;
+        } else {
+          customToast('Payment not done due to some error');
         }
-      }
-        ).onError((error, stackTrace) {
+      }).onError((error, stackTrace) {
         customToast("$error $stackTrace");
       });
     } on StripeException catch (e) {
