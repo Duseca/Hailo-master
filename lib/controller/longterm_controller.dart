@@ -83,7 +83,7 @@ class LongTermController extends GetxController {
   bool added = false;
 
   List<String> selectedItems = [
-    'Recurring',
+    // 'Recurring',
     'One Time',
   ];
   RxMap pastUserLocation = {}.obs;

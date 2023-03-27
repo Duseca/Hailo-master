@@ -1103,7 +1103,7 @@ class LongTerm extends GetView<LongTermController> {
                                           String date = DateFormat("dd-MM-yyyy").format(day);
 
                                           // var a=controller.selectTime(draggedService: draggedService, context: context);
-                                          var a= await Get.defaultDialog(
+                                          var a= await Get.defaultDialog(barrierDismissible: false,
                                               title: 'Select time',
                                               content: Container(
                                                 width: 100.w,
@@ -1216,6 +1216,18 @@ class LongTerm extends GetView<LongTermController> {
                                                     ),
                                                     SizedBox(height: 10,),
                                                     TextButton(onPressed: (){
+                                                      if(draggedService["startTime"]==null){
+                                                        controller.startTime.value='09:00 AM';
+                                                        draggedService["startTime"]= controller.startTime.value;
+                                                        print(controller.startTime.value);
+
+                                                      }
+                                                      if(draggedService["endTime"]==null){
+                                                        controller.endTime.value='12:00 PM';
+                                                        draggedService["endTime"]= controller.endTime.value;
+                                                        print(controller.endTime.value);
+                                                      }
+
                                                       Get.back();
                                                     }, child: Text('Done',style: TextStyle(color: kPrimaryColor,fontSize: 16),))
 
@@ -1428,7 +1440,8 @@ class LongTerm extends GetView<LongTermController> {
               const Padding(
                 padding: EdgeInsets.all(18.0),
                 child: Text(
-                  "Hourly Rate",
+                  "Rate",
+                  // "Hourly Rate",
                   style: TextStyle(fontFamily: "Poppins", fontSize: 20, fontWeight: FontWeight.w600),
                 ),
               ),
