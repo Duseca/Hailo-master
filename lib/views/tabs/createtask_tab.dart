@@ -2148,11 +2148,14 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
         }
       }).onError((error, stackTrace) {
         customToast("$error $stackTrace");
+        print('ERROR COMING HERE');
       });
     } on StripeException catch (e) {
       customToast("${e.error}");
+      print('ERROR COMING HERE2');
     } catch (e) {
-      customToast('$e');
+      // customToast('$e');
+      print('ERROR COMING HERE3');
     }
   }
 
