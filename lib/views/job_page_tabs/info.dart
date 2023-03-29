@@ -294,8 +294,8 @@ class _InfoState extends State<Info> {
                           borderRadius: BorderRadius.circular(9)),
                       child: Center(
                           child: Text(
-                        "\$ ${udata["price"]}",
-                        // "\$ ${udata["price"]} per hour ",
+                        // "\$ ${udata["price"]}",
+                        "\$ ${udata["price"]} per hour ",
                         textAlign: TextAlign.center,
                         style: fontBody(fontSize: 22, fontColor: kPrimaryColor),
                       )),

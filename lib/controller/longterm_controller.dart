@@ -93,6 +93,7 @@ class LongTermController extends GetxController {
 // Calendar Functions
   void addAvailability(DateTime date) {
     availability.insert(0, date);
+    availability.sort();
   }
 callUpdate(){
     update();
