@@ -12,7 +12,7 @@ class Splash extends GetView<SplashController> {
     return Scaffold(
       backgroundColor: kPrimaryColor,
       body: Center(
-        child: Image.asset("assets/hailologo.jpg",)
+        child: Image.asset("assets/hailoLOGO.png",)
       ),
     );
   }
