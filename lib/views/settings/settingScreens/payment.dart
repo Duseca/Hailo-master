@@ -126,11 +126,14 @@ class _PaymentSheetScreenState extends State<PaymentSheetScreen> {
             child: CardFormField(
                       controller: controller,
                       style: CardFormStyle(
-                        backgroundColor: Colors.white,
+                        backgroundColor: Colors.grey.shade200,
                         borderRadius: 20,
                         borderColor: kLightGreyColor,
                         cursorColor: kPrimaryColor,
-                        placeholderColor: kLightGreyColor,textColor: Colors.black,borderWidth: 1,textErrorColor: Colors.red,
+                        placeholderColor: kLightGreyColor,
+                        textColor: Colors.black,
+                        borderWidth: 1,
+                        textErrorColor: Colors.red,
 
                       ),
                       autofocus: true,

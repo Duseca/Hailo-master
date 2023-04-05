@@ -202,6 +202,7 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
 
     List<Location> locations = [];
     try {
+      customToast('Finding location');
       locations = await locationFromAddress(pickUpController.text);
       customToast('Location selected');
       var first = locations.first;
@@ -236,6 +237,7 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
 
     List<Location> locations = [];
     try {
+      customToast('Finding location');
       locations = await locationFromAddress(stopOneController.text);
       customToast('Location selected');
       var first = locations.first;
@@ -268,6 +270,7 @@ class _CreateTaskTabState extends State<CreateTaskTab> {
 
     List<Location> locations = [];
     try {
+      customToast('Finding location');
       locations = await locationFromAddress(searchLocationController.text);
       customToast('Location selected');
       var first = locations.first;
