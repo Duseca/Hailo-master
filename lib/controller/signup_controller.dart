@@ -107,7 +107,8 @@ class SignupController extends GetxController {
           phoneNumber: '${phoneCodeController.value.text} ${phoneNumberController.value.text}',
           verificationCompleted: (PhoneAuthCredential credential) {},
           verificationFailed: (FirebaseAuthException e) {
-            customToast(e.code);
+            customToast(e.code!);
+            print(e.message);
           },
           timeout: const Duration(seconds: 60),
           codeSent: (String verificationId, int? resendToken) {
