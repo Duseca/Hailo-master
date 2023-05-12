@@ -10,6 +10,7 @@ import 'package:hailo/core/utils/form_validators.dart';
 import 'package:hailo/views/widgets/CardFormField.dart';
 import 'package:pinput/pinput.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controller/signup_controller.dart';
 import '../core/common.dart';
@@ -421,7 +422,7 @@ class Signup extends GetView<SignupController> {
           //-----------TERMS AND CONDITIONS--------------
           Padding(
             padding: const EdgeInsets.all(32),
-            child: Column(
+            child: ListView(
               children: [
                 Container(
                   height: context.height / 2,
@@ -434,6 +435,19 @@ class Signup extends GetView<SignupController> {
                       Text("LEGAL DOCUMENT", textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                       Text(
                           "Malesuada tincidunt ante condimentum eget pulvinar id vulputate sit ut. Nibh quis etiam nibh nullam diam auctor. Eu a tellus molestie urna nulla odio nunc. Facilisi vitae molestie quam semper bibendum. Aliquet mi dictum purus feugiat lorem bibendum diam pharetra. Faucibus amet, mi senectus purus. Tellus viverra non adipiscing velit arcu, massa commodo commodo, eget. Amet, ut mauris non pellentesque tellus dolor vivamusNunc eu neque ultrices tristique. A viverra amet interdum lacus, amet sed. Auctor pellentesque pharetra ullamcorper ornare auctor varius egestas rhoncus, lobortis. Tristique egestas et aliquam libero ultrices auctor. Quis fusce proin neque felis felis magna. In tempus massa ullamcorper viverra. Tincidunt senectus luctus lectus blandit tortor. Ipsum sollicitudin arcu sit amet rutrum semper turpis amet, ut. Blandit habitasse sit pulvinar donec sit in massa convallis quis. Rhoncus massa nisl commodo pulvinar placerat tincidunt posuere ac.Lectus malesuada mattis tristique arcu, in consequat cursus id. Adipiscing consectetur lectus auctor amet odio suspendisse varius sit tellus. Lectus a mauris nulla dui scelerisque.Quis fusce proin neque felis felis magna. In tempus massa ullamcorper viverra. Tincidunt senectus luctus lectus blandit tortor. Ipsum sollicitudin arcu sit amet rutrum semper turpis amet, ut. Blandit habitasse sit pulvinar donec sit in massa convallis quis. Rhoncus massa nisl commodo pulvinar placerat tincidunt posuere ac.")
+                    ],
+                  ),
+                ),
+                Container(
+                  height: context.height / 2,
+                  margin: const EdgeInsets.only(bottom: 15),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: Color(0xffE5E5E5), width: 2)),
+                  child: ListView(
+                    padding: const EdgeInsets.all(15),
+                    controller: ScrollController(),
+                    children: const [
+                      Text("Terms and Conditions", textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                      Text('Hailo provides a personalized multipurpose digital marketplace platform (“Hailo Platform”)that enables you (“Client”) to conveniently find, request, and receive certain home careservices from third-party providers that meet your needs and requirements. These third-partyproviders are licensed/certified Home Care Aides or their jurisdictional equivalents(“Caregivers”) who operate as independent contractors on the Hailo Platform. These Terms ofUse (“Terms”) govern your access or use, from within the United States and its territories andpossessions, of the Hailo Platform and any related content or services (collectively, the“Services,” as more fully defined below in Section 3) made available in the United States andits territories and possessions by HailoCare, Inc. and its subsidiaries, representatives, affiliates,officers, and directors (collectively, “Hailo” or “HailoCare”). PLEASE READ THESE TERMSCAREFULLY, AS THEY CONSTITUTE A LEGAL AGREEMENT BETWEEN YOU ANDHAILOCARE. In these Terms, the words “including” and “include” mean “including, but notlimited to.”')
                     ],
                   ),
                 ),
@@ -455,7 +469,10 @@ class Signup extends GetView<SignupController> {
                         const TextSpan(text: " and accept ", style: TextStyle(color: Color(0xffD8D8D8))),
                         TextSpan(
                           text: "Terms of Condition",
-                          recognizer: TapGestureRecognizer()..onTap = () => {},
+                          recognizer: TapGestureRecognizer()..onTap = () async {
+                            final Uri _url = Uri.parse('https://hailocare.com/tos/?amp=1');
+                            await launchUrl(_url);
+                          },
                           style: const TextStyle(color: Color(0xff49DDC4), decoration: TextDecoration.underline),
                         ),
                       ]),

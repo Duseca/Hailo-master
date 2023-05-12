@@ -67,6 +67,14 @@
                 <string>app-1-890429033978-ios-b571386eed03f8246b2843</string>
             </array>
         </dict>
+        <dict>
+        	<key>CFBundleTypeRole</key>
+        	<string>Editor</string>
+        	<key>CFBundleURLSchemes</key>
+        	<array>
+        		<string>app-1-890429033978-ios-8da22c1f09d5ce776b2843</string>
+        	</array>
+        </dict>
     </array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

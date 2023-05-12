@@ -13,9 +13,12 @@ import 'package:hailo/views/settings/settingScreens/payment.dart';
 import 'package:hailo/views/settings/settingScreens/profiles/editprofiles.dart';
 import 'package:hailo/views/settings/settingScreens/profiles/selectprofile.dart';
 import 'package:hailo/views/settings/supportChat.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../../core/constants/collections.dart';
 import '../../../core/utils/common.dart';
+import '../../core/bindings.dart';
+import '../login.dart';
 
 class SettingSt extends StatefulWidget {
   final String uid;
@@ -301,6 +304,50 @@ class _SettingStState extends State<SettingSt> {
                       Icons.arrow_forward_ios,
                       color: kPrimaryColor,
                       size: 13,
+                    ),
+                  ),
+                  SizedBox(height: 23.h,),
+                  InkWell(
+                    onTap: (){
+                      Get.defaultDialog(title: 'Are you sure?',middleText: 'This will delete all the data that your account contains including any payments and orders.',
+
+                        confirm: ElevatedButton(onPressed: () async {
+                          Get.back();
+                          await usersCollection.doc(widget.uid).delete();
+                          await FirebaseAuth.instance.currentUser!.delete();
+                          Get.offAll(()=>Login(),binding: LoginBinding());
+
+                          customToast('Deleted');
+                        }, child: Text('Done'),style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red),),),
+                        cancel: TextButton(onPressed: (){
+                          Get.back();
+                        }, child: Text('Cancel',style: fontBody(fontColor: kPrimaryColor,fontSize: 14),)),
+                      );
+                    },
+                    child: Center(
+                      child: Container(
+                        height: 6.h,
+                        width: 70.w,
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(Icons.delete,color: Colors.white,size: 24,),
+                                Text('Delete Account',style: fontBody(fontColor: Colors.white,fontSize: 16
+                                ),),
+                                SizedBox(width: 10,)
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   )
 

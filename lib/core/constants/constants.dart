@@ -1,1 +1,2 @@
-const api='http://34.209.72.115:8080/api';
+const api='https://api.hailocare.com/api';
+// const api='https://34.209.72.115:443/api';

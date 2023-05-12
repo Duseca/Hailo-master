@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>890429033978-56vothfe2atuor7pu0n97i4ahgtg2imb.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.890429033978-56vothfe2atuor7pu0n97i4ahgtg2imb</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>890429033978-53ep29nvpecohp7m6eg2ln0neu5641na.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDNgAGDEKX2CH5QS8nR43QOT1R6XegSkT8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>890429033978</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.viral.instacura</string>
+	<key>PROJECT_ID</key>
+	<string>hailo-a246d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hailo-a246d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:890429033978:ios:8da22c1f09d5ce776b2843</string>
+</dict>
+</plist>
